@@ -1,0 +1,38 @@
+version: "3.9"
+services:
+  db:
+    container_name: chat-db
+    image: mysql:8.0
+    expose:
+      - 3306
+    environment:
+      # if changed here, make sure to change config in chat.py
+      MYSQL_DATABASE: chatDb
+      MYSQL_ROOT_PASSWORD: example
+    stdin_open: true
+    tty: true
+
+  app1:
+    container_name: chat1
+    links:
+      - "db"
+    build: .
+  app2:
+    container_name: chat2
+    links:
+      - "db"
+    build: .
+  app3:
+    container_name: chat3
+    links:
+      - "db"
+    build: .
+
+  nginx:
+    build: ./nginx
+    ports:
+      - "8080:80" # expose 8080, 80 is often in use
+    depends_on:
+      - app1
+      - app2
+      - app3
