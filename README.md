@@ -1,3 +1,3 @@
 # README
 
-Execute ./init-app.sh to run the app
+Execute ./init-chat.sh to run the app
